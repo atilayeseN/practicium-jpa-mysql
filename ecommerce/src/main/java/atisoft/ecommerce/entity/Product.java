@@ -2,6 +2,7 @@ package atisoft.ecommerce.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 public class Product{
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    private Integer id;
 	
 	@Column(name = "isim", length = 50, nullable = false, unique = false)
 	private String name;
@@ -24,7 +25,15 @@ public class Product{
 	private BigDecimal price;
 	
 	@Column(name = "son_kullanma_tarihi" , nullable = true, unique = false)
-	private Date expire_date;
+	private Date expirationDate;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -43,12 +52,37 @@ public class Product{
 	}
 
 	public Date getExpire_date() {
-		return expire_date;
+		return expirationDate;
 	}
 
 	public void setExpire_date(Date expire_date) {
-		this.expire_date = expire_date;
+		this.expirationDate = expire_date;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(expirationDate, id, name, price);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(expirationDate, other.expirationDate) && Objects.equals(id, other.id)
+				&& Objects.equals(name, other.name) && Objects.equals(price, other.price);
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", expirationDate=" + expirationDate + "]";
+	}
+	
+	
 	
 	
 }
